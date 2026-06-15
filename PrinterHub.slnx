@@ -4,5 +4,5 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="PrinterHub/PrinterHub.vcxproj" />
-  <Project Path="PrinterHubTest/PrinterHubTest.vcxproj" Id="69b42553-3ede-471b-ba31-32ff3a785400" />
+  <Project Path="test/test.vcxproj" Id="ba3c8967-2754-485a-ad3f-53afb42c4c65" />
 </Solution>

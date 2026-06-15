@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="TestPrintermangane.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PrinterHub\src\core\PrinterManager.cpp" />
+    <ClCompile Include="..\PrinterHub\src\core\Printer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="test">
+      <UniqueIdentifier>{0b3401de-80da-47b1-81a0-8afe1d68d313}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

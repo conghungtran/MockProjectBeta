@@ -164,9 +164,6 @@
     <ClCompile Include="src\ui\component\CCustomButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ui\component\pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ui\component\CCustomEdit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

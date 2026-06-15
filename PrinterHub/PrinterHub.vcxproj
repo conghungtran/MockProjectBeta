@@ -247,7 +247,6 @@
     <ClCompile Include="src\io\CsvReader.cpp" />
     <ClCompile Include="src\ui\dialog\CAddPrinterDlg.cpp" />
     <ClCompile Include="src\core\ConvertData.cpp" />
-    <ClCompile Include="src\ui\component\pch.cpp" />
     <ClCompile Include="src\ui\CPrinterHubView.cpp" />
     <ClCompile Include="src\ui\MainFrm.cpp" />
     <ClCompile Include="src\ui\pch.cpp">
