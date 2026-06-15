@@ -1,0 +1,8 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="PrinterHub/PrinterHub.vcxproj" />
+  <Project Path="PrinterHubTest/PrinterHubTest.vcxproj" Id="69b42553-3ede-471b-ba31-32ff3a785400" />
+</Solution>
