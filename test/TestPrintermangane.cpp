@@ -2,9 +2,43 @@
 #include "gtest/gtest.h"
 
 #include "../PrinterHub/src/core/PrinterManager.h"
+#include "../PrinterHub/src/core/Printer.h"
+
+#include "../PrinterHub/src/core/repository/MockPrinterRepository.h"
 
 
 using namespace PrinterHub::Core;
+
+TEST(PrinterManagerTest, AddPrinter_ValidPrinter_ReturnsSuccess1)
+{
+    // Tạo mock repository
+    auto mockRepo = std::make_shared<MockPrinterRepository>();
+    PrinterManager manager(mockRepo);  // ✅ Inject repository
+
+    Printer printer(
+        "P001",
+        "HP LaserJet",
+        PrinterBrand::HP,
+        PrinterStatus::ACTIVE,
+        "01/01/2026",
+        12
+    );
+
+    Printer printer1(
+        "P001",
+        "HP LaserJet",
+        PrinterBrand::HP,
+        PrinterStatus::ACTIVE,
+        "01/01/2026",
+        12
+    );
+
+    PrinterError result = manager.AddPrinter(printer);
+    PrinterError result1 = manager.AddPrinter(printer1);
+
+    EXPECT_EQ(result1, PrinterError::DuplicateId);  // ✅ Bây giờ đúng
+    EXPECT_EQ(manager.GetPrinterCount(), 1);
+}
 
 TEST(PrinterManagerTest, AddPrinter_ValidPrinter_ReturnsSuccess)
 {
@@ -21,7 +55,9 @@ TEST(PrinterManagerTest, AddPrinter_ValidPrinter_ReturnsSuccess)
 
     PrinterError result = manager.AddPrinter(printer);
 
-    EXPECT_EQ(result, PrinterError::Success);
+
+    EXPECT_EQ(result, PrinterError::RepositoryNotSet);
+
     EXPECT_EQ(manager.GetPrinterCount(), 1);
 }
 

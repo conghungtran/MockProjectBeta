@@ -5,11 +5,12 @@
     <ClCompile Include="TestPrintermangane.cpp">
       <Filter>test</Filter>
     </ClCompile>
-    <ClCompile Include="..\PrinterHub\src\core\PrinterManager.cpp" />
     <ClCompile Include="..\PrinterHub\src\core\Printer.cpp" />
+    <ClCompile Include="..\PrinterHub\src\core\PrinterManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="..\PrinterHub\src\core\repository\MockPrinterRepository.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

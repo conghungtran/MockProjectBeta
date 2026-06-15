@@ -1,6 +1,6 @@
+// MockPrinterRepository.h - Phiên bản hoàn chỉnh
 #pragma once
 #include "IPrinterRepository.h"
-
 #include <vector>
 
 namespace PrinterHub {
@@ -31,7 +31,8 @@ namespace PrinterHub {
             bool m_updateShouldSucceed = true;
             bool m_deleteShouldSucceed = true;
 
-            // IPrinterRepository implementation
+            // ========== IPrinterRepository implementation ==========
+
             bool Load(std::vector<Printer>& printers) override {
                 m_loadCallCount++;
                 if (m_loadShouldSucceed) {
@@ -81,7 +82,18 @@ namespace PrinterHub {
                 return false;
             }
 
-            // Helper methods
+            // ✅ Thêm GetStoragePath (nếu IPrinterRepository yêu cầu)
+            std::string GetStoragePath() const override {
+                return "mock://storage";
+            }
+
+            // ✅ Thêm IsAvailable (nếu IPrinterRepository yêu cầu)
+            bool IsAvailable() const override {
+                return true;
+            }
+
+            // ========== Helper methods ==========
+
             void Reset() {
                 m_loadCallCount = 0;
                 m_saveCallCount = 0;

@@ -5,6 +5,11 @@
 
 using namespace PrinterHub::Core;
 
+PrinterManager::PrinterManager(std::shared_ptr<IPrinterRepository> repository)
+    : m_repository(repository)
+{
+}
+
 
 //void PrinterManager::SetUpFirmware() {
 //    m_firmwares.push_back(Firmware("FW001", PrinterBrand::HP, "1.0.0", "2024-01-01", "100MB"));

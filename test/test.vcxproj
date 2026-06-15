@@ -97,6 +97,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\PrinterHub\src\core\repository\MockPrinterRepository.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

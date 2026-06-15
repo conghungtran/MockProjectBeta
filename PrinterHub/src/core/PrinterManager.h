@@ -14,6 +14,9 @@ namespace PrinterHub {
     namespace Core {
         class PrinterManager : public IObservable {
         public:
+
+            explicit PrinterManager(std::shared_ptr<IPrinterRepository> repository = nullptr);
+
             // Command execution (tự động lưu vào undo stack)
             void ExecuteCommand(std::unique_ptr<ICommand> command);
 
