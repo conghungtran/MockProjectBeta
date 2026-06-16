@@ -470,7 +470,6 @@ void CPrinterHubView::AddTicketToList(
 
 }
 
-
 void CPrinterHubView::DeletePrinterFromList(int nIndex)
 {
 	if (nIndex < 0 || nIndex >= m_listPrinters.GetItemCount()) {
@@ -598,7 +597,10 @@ void CPrinterHubView::RefreshFirmwareQueue()
 		m_listFirmWare.SetItemText(nItem, 0, strSTT);
 
 		// Cột 1: Tên máy in
-		m_listFirmWare.SetItemText(nItem, 1, ConvertData::StringToCString(fw.getId()));
+		//if (fw.printer_id.empty()) {
+		//	std::cout << "(((((((( ID Empty \n";
+		//}
+		m_listFirmWare.SetItemText(nItem, 1, ConvertData::StringToCString(fw.getPrinterId()));
 
 		// Cột 2: Firmware version
 		m_listFirmWare.SetItemText(nItem, 2, ConvertData::StringToCString(fw.getId()));
@@ -775,14 +777,13 @@ void CPrinterHubView::OnBnClickedButtonPrinterUpdateFirmware()
 	// 2. Lấy thông tin máy in
 	const auto& printer = GetDocument()->GetPrinter(nSel);
 
-	
 	CString strPrinterId(printer.getId().c_str());
 	CString strPrinterModel(printer.getModel().c_str());
 	//CString strCurrentVersion = GetCurrentFirmwareVersion(strPrinterId);
 
 	// 3. Mở dialog chọn firmware
 	UpdateFirmwareDlg dlg;
-	dlg.SetPrinterInfo(strPrinterId,  strPrinterModel, CString("Model UUUU"));
+	dlg.SetPrinterInfo(strPrinterId,  strPrinterModel, CString("Firmware v1.1"));
 
 	//dlg.SetAvailableFirmwares(GetFirmwareListForModel(strPrinterModel));
 
@@ -790,8 +791,10 @@ void CPrinterHubView::OnBnClickedButtonPrinterUpdateFirmware()
 		int num = randomAZ(1, 2000);
 		std::string str = std::to_string(num);
 
-		Firmware fw(str, PrinterBrand::HP, "v^123", "23/02/2004", "200GB");
-		fw.printer_id = printer.getId();
+		Firmware fw(str, printer.getId(), PrinterBrand::HP, "v^123", "23/02/2004", "200GB");
+		std::cout << "*&&&&& ID =   " << printer.getId() << std::endl;
+		//std::cout << "*&&&&& Firm Ware ID =   " << fw.printer_id << std::endl;
+
 		fw.setProgress(10);
 		Printer& p = GetDocument()->m_manager.get()->GetPrinter(nSel);
 		p.setStatus(PrinterStatus::INSERVICE);
@@ -855,10 +858,13 @@ void CPrinterHubView::OnTimer(UINT_PTR nIDEvent)
 			auto& fw = GetDocument()->m_firmwareTable[i];
 			if (fw.getProgress() < 0) {
 				m_listFirmWare.SetItemText(i, 4, _T("Done"));
-				Printer *p = GetDocument()->m_manager.get()->GetPrinterById(fw.printer_id);
+				Printer *p = GetDocument()->m_manager.get()->GetPrinterById(fw.getPrinterId());
 				if (p != nullptr) {
 					p->setStatus(PrinterStatus::ACTIVE);
 					RefreshPrintersList();
+				}
+				else {
+					//std::cout << "*NU"
 				}
 				//p.setStatus(PrinterStatus::ACTIVE);
 				

@@ -25,6 +25,7 @@ namespace PrinterHub {
             Firmware();
             Firmware(
                 const std::string& id,
+                const std::string& printerId,
                 PrinterBrand brand,
                 const std::string& version,
                 const std::string& releaseDate,
@@ -37,6 +38,7 @@ namespace PrinterHub {
 
             // ========== Getters ==========
             std::string getId() const { return m_id; }
+            std::string getPrinterId() const { return m_printerId; }
             PrinterBrand getBrand() const { return m_brand; }
             std::string getVersion() const { return m_version; }
             std::string getReleaseDate() const { return m_releaseDate; }
@@ -47,6 +49,7 @@ namespace PrinterHub {
 
             // ========== Setters ==========
             void setId(const std::string& id) { m_id = id; }
+            void setPrinterId(const std::string& printerId) { m_printerId = printerId; }
             void setBrand(PrinterBrand brand) { m_brand = brand; }
             void setVersion(const std::string& version) { m_version = version; }
             void setReleaseDate(const std::string& date) { m_releaseDate = date; }
@@ -84,16 +87,16 @@ namespace PrinterHub {
             // Hiển thị thông tin
             std::string toString() const;
 
-        public:
+        private:
             std::string m_id;                   // Mã firmware
+            std::string m_printerId;            // ID máy in (PRN001, PRN002...)
             PrinterBrand m_brand;               // Hãng máy in (HP, Canon, Epson, Other)
             std::string m_version;              // Phiên bản (vd: v1.3.0)
             std::string m_releaseDate;          // Ngày phát hành (vd: 2024-06-01)
             std::string m_diskSpace;            // Dung lượng (vd: 4.2 MB)
             FirmwareUpdateStatus m_updateStatus; // Trạng thái cập nhật
             int m_progress;                     // Tiến độ (0-100)
-            std::string m_errorMessage;
-            std::string printer_id;
+            std::string m_errorMessage;         // Thông báo lỗi
         };
 
     }

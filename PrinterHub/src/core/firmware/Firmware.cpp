@@ -10,6 +10,7 @@ namespace PrinterHub {
         // ========== Constructors ==========
         Firmware::Firmware()
             : m_id("")
+            , m_printerId("")
             , m_brand(PrinterBrand::OTHER)
             , m_version("")
             , m_releaseDate("")
@@ -20,12 +21,15 @@ namespace PrinterHub {
         {
         }
 
-        Firmware::Firmware(const std::string& id,
+        Firmware::Firmware(
+            const std::string& id,
+            const std::string& printerId,
             PrinterBrand brand,
             const std::string& version,
             const std::string& releaseDate,
             const std::string& diskSpace)
             : m_id(id)
+            , m_printerId(printerId)
             , m_brand(brand)
             , m_version(version)
             , m_releaseDate(releaseDate)
@@ -43,6 +47,7 @@ namespace PrinterHub {
         // ========== Copy & Assignment ==========
         Firmware::Firmware(const Firmware& other)
             : m_id(other.m_id)
+            , m_printerId(other.m_printerId)
             , m_brand(other.m_brand)
             , m_version(other.m_version)
             , m_releaseDate(other.m_releaseDate)
@@ -57,6 +62,7 @@ namespace PrinterHub {
         {
             if (this != &other) {
                 m_id = other.m_id;
+                m_printerId = other.m_printerId;
                 m_brand = other.m_brand;
                 m_version = other.m_version;
                 m_releaseDate = other.m_releaseDate;
@@ -149,6 +155,7 @@ namespace PrinterHub {
             std::stringstream ss;
             ss << "Firmware{"
                 << "id=" << m_id
+                << ", printerId=" << m_printerId
                 << ", brand=" << BrandToString(m_brand)
                 << ", version=" << m_version
                 << ", releaseDate=" << m_releaseDate
