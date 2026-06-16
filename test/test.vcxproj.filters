@@ -2,11 +2,14 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="TestPrintermangane.cpp">
-      <Filter>test</Filter>
-    </ClCompile>
     <ClCompile Include="..\PrinterHub\src\core\Printer.cpp" />
     <ClCompile Include="..\PrinterHub\src\core\PrinterManager.cpp" />
+    <ClCompile Include="TestPrinter.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
+    <ClCompile Include="TestPrinterManager.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

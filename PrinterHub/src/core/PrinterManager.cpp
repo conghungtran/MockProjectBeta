@@ -198,6 +198,7 @@ PrinterError PrinterManager::DeletePrinter(int index)
         if (!m_repository->Delete(index)) {
             // Rollback: thêm lại printer vào vị trí cũ
             m_printers.insert(m_printers.begin() + index, deletedPrinter);
+
             return PrinterError::RepositoryDeleteFailed;
         }
     }
@@ -358,6 +359,27 @@ int PrinterManager::FindPrinterById(const std::string& id) const
     return -1;
 }
 
+// PrinterManager.cpp
+Printer* PrinterManager::GetPrinterById(const std::string& id)
+{
+    for (auto& printer : m_printers) {
+        if (printer.getId() == id) {
+            return &printer;
+        }
+    }
+    return nullptr;
+}
+
+const Printer* PrinterManager::GetPrinterById(const std::string& id) const
+{
+    for (const auto& printer : m_printers) {
+        if (printer.getId() == id) {
+            return &printer;
+        }
+    }
+    return nullptr;
+}
+
 void PrinterManager::Attach(IObserver* observer)
 {
     if (observer && std::find(m_observers.begin(), m_observers.end(), observer) == m_observers.end())
@@ -381,4 +403,26 @@ void PrinterManager::Notify(PrinterEvent event, int index)
     {
         observer->OnPrinterChanged(event, index);
     }
+}
+
+// PrinterManager.cpp
+void PrinterManager::setSortStrategy(std::unique_ptr<ISortStrategy> strategy)
+{
+    m_sortStrategy = std::move(strategy);
+}
+
+void PrinterManager::sortPrinters()
+{
+    if (m_sortStrategy) {
+        m_sortStrategy->sort(m_printers);
+        Notify(PrinterEvent::PrintersSorted, -1);
+    }
+}
+
+CString PrinterManager::getCurrentSortName() const
+{
+    if (m_sortStrategy) {
+        return m_sortStrategy->getName();
+    }
+    return _T("No sort");
 }

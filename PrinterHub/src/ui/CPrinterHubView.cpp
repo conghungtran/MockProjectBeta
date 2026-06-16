@@ -28,6 +28,10 @@
 #include "../core/ConvertData.h"
 #include "dialog/CCreateTicketDlg.h"
 #include <random>
+#include "../core/Sort/SortById.h"
+#include "../core/Sort/SortByBrand.h"
+#include "../core/Sort/SortByModel.h"
+
 using namespace PrinterHub::Core;
 
 
@@ -54,6 +58,8 @@ BEGIN_MESSAGE_MAP(CPrinterHubView, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON_TICKET_NEW_TICKET, &CPrinterHubView::OnBnClickedButtonTicketNewTicket)
 	ON_BN_CLICKED(IDC_BUTTON_TICKET_CLOSE_TICKET, &CPrinterHubView::OnBnClickedButtonTicketCloseTicket)
 	ON_BN_CLICKED(IDC_BUTTON_TICKET_REMOVE, &CPrinterHubView::OnBnClickedButtonTicketRemove)
+	ON_BN_CLICKED(IDC_BUTTON_SORT_ID, &CPrinterHubView::OnBnClickedButtonSortId)
+	ON_CBN_SELCHANGE(IDC_COMBO_COBOBOX_SORT, &CPrinterHubView::OnCbnSelchangeComboCoboboxSort)
 END_MESSAGE_MAP()
 
 // CPrinterHubView construction/destruction
@@ -81,6 +87,7 @@ void CPrinterHubView::DoDataExchange(CDataExchange* pDX)
 
 	//DDX_Control(pDX, IDC_BUTTON_PRINTER_ADD_PRINTER, m_btnAdd);
 	DDX_Control(pDX, IDC_STATIC_TIMER, m_static_time);
+	DDX_Control(pDX, IDC_COMBO_COBOBOX_SORT, m_combo_sort);
 }
 
 BOOL CPrinterHubView::PreCreateWindow(CREATESTRUCT& cs)
@@ -96,6 +103,8 @@ void CPrinterHubView::OnInitialUpdate()
 	CFormView::OnInitialUpdate();
 	CPrinterHubView::InitializeListControl();
 
+
+
 	StartTimer();
 	std::cout << "**************CPrinterHubView::OnInitialUpdate - Starting timer..." << std::endl;
 
@@ -104,10 +113,18 @@ void CPrinterHubView::OnInitialUpdate()
 }
 
 void CPrinterHubView::InitializeListControl() {
+	m_combo_sort.InsertString(0, _T("Sort ID"));      // Vị trí 0
+	m_combo_sort.InsertString(1, _T("Sort Brand"));   // Vị trí 1
+	m_combo_sort.InsertString(2, _T("Sort Model"));   // Vị trí 2
+
+	m_combo_sort.SetCurSel(0);
+
+
 
 	DWORD dwStyle = m_listPrinters.GetExtendedStyle();
 	dwStyle |= LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | LVS_EX_HEADERDRAGDROP | LVS_EX_CHECKBOXES;
 	m_listPrinters.SetExtendedStyle(dwStyle);
+
 
 	// Thiết lập cột cho List Printers
 	m_listPrinters.InsertColumn(0, _T("STT"), LVCFMT_LEFT, 100);        // Cột checkbox (để trống)
@@ -766,7 +783,11 @@ void CPrinterHubView::OnBnClickedButtonPrinterUpdateFirmware()
 	//dlg.SetAvailableFirmwares(GetFirmwareListForModel(strPrinterModel));
 
 	if (dlg.DoModal() == IDOK) {
-		Firmware fw("A123", PrinterBrand::HP, "v^123", "23/02/2004", "200GB");
+		int num = randomAZ(1, 2000);
+		std::string str = std::to_string(num);
+
+		Firmware fw(str, PrinterBrand::HP, "v^123", "23/02/2004", "200GB");
+		fw.printer_id = printer.getId();
 		fw.setProgress(10);
 		Printer& p = GetDocument()->m_manager.get()->GetPrinter(nSel);
 		p.setStatus(PrinterStatus::INSERVICE);
@@ -830,9 +851,13 @@ void CPrinterHubView::OnTimer(UINT_PTR nIDEvent)
 			auto& fw = GetDocument()->m_firmwareTable[i];
 			if (fw.getProgress() < 0) {
 				m_listFirmWare.SetItemText(i, 4, _T("Done"));
-				Printer& p = GetDocument()->m_manager.get()->GetPrinter(i);
-				p.setStatus(PrinterStatus::ACTIVE);
-				RefreshPrintersList();
+				Printer *p = GetDocument()->m_manager.get()->GetPrinterById(fw.printer_id);
+				if (p != nullptr) {
+					p->setStatus(PrinterStatus::ACTIVE);
+					RefreshPrintersList();
+				}
+				//p.setStatus(PrinterStatus::ACTIVE);
+				
 			}
 			else {
 				m_listFirmWare.SetItemText(i, 4, std::to_wstring(fw.getProgress()).c_str());
@@ -970,4 +995,56 @@ void CPrinterHubView::OnBnClickedButtonTicketRemove()
 
 	RefreshTicketsList();
 
+}
+
+void CPrinterHubView::OnBnClickedButtonSortId()
+{
+	CPrinterHubDoc* pDoc = GetDocument();
+
+	// ✅ Chọn strategy sort theo ID
+	auto strategy = std::make_unique<SortById>();
+	pDoc->m_manager->setSortStrategy(std::move(strategy));
+	pDoc->m_manager->sortPrinters();
+
+	RefreshPrintersList();
+
+	AfxMessageBox(_T("Sorted by ID"));
+}
+
+void CPrinterHubView::OnCbnSelchangeComboCoboboxSort()
+{
+	std::cout << "Sorttt \n";
+	int nSel = m_combo_sort.GetCurSel();
+
+	
+	CPrinterHubDoc* pDoc = GetDocument();
+	std::unique_ptr<ISortStrategy> strategy;
+
+	switch (nSel) {
+	case 0:  // Sort by ID
+		std::cout << "Sort ID \n";
+		strategy = std::make_unique<SortById>();
+		break;
+	case 1:  // Sort by Model
+		std::cout << "Sort Brand \n";
+		strategy = std::make_unique<SortByBrand>();
+		break;
+	case 2:  // Sort by Brand
+		std::cout << "Sort Model \n";
+		strategy = std::make_unique<SortByModel>();
+		break;
+		//case 3:  // Sort by Date
+		//	strategy = std::make_unique<SortByPurchaseDate>();
+		//	break;
+		//case 4:  // Sort by Warranty
+		//	strategy = std::make_unique<SortByWarranty>();
+		//	break;
+		}
+
+		if (strategy) {
+			pDoc->m_manager->setSortStrategy(std::move(strategy));
+			pDoc->m_manager->sortPrinters();
+			RefreshPrintersList();
+		}
+	
 }

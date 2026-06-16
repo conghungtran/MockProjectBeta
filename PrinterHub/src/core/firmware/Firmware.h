@@ -92,7 +92,8 @@ namespace PrinterHub {
             std::string m_diskSpace;            // Dung lượng (vd: 4.2 MB)
             FirmwareUpdateStatus m_updateStatus; // Trạng thái cập nhật
             int m_progress;                     // Tiến độ (0-100)
-            std::string m_errorMessage;         // Thông báo lỗi (nếu có)
+            std::string m_errorMessage;
+            std::string printer_id;
         };
 
     }

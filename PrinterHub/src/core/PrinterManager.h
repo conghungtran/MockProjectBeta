@@ -8,6 +8,7 @@
 #include "./CommandPattern/ICommand.h"
 #include "repository/IPrinterRepository.h"
 #include "PrinterError.h"
+#include "Sort/ISortStrategy.h"
 //#include "firmware/Firmware.h"
 
 namespace PrinterHub {
@@ -50,6 +51,10 @@ namespace PrinterHub {
             // Queries
             const Printer& GetPrinter(int index) const;
             Printer& GetPrinter(int index);
+            Printer* GetPrinterById(const std::string& id);
+            const Printer* GetPrinterById(const std::string& id) const;
+
+
             int GetPrinterCount() const { return m_printers.size(); }
             int FindPrinterById(const std::string& id) const;
             const std::vector<Printer>& GetAllPrinters() const { return m_printers; }
@@ -71,11 +76,13 @@ namespace PrinterHub {
                 m_repository = std::move(repository);
             }
 
-        
+            void setSortStrategy(std::unique_ptr<ISortStrategy> strategy);
+            void sortPrinters();
+            CString getCurrentSortName() const;
           
         private:
             std::vector<Printer> m_printers;
-
+            std::unique_ptr<ISortStrategy> m_sortStrategy;
             std::vector<IObserver*> m_observers;
             std::shared_ptr<IPrinterRepository> m_repository;
 

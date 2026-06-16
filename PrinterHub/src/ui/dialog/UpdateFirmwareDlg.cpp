@@ -82,13 +82,13 @@ void UpdateFirmwareDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_STATIC_DISK_SPACE, detail_disk_space);
 
 	//// Automatically map
-	//DDX_Text(pDX, IDC_STATIC_FW_printer, cstr_fw_printer);
-	//DDX_Text(pDX, IDC_STATIC_FW_model, cstr_model);
-	//DDX_Text(pDX, IDC_STATIC_FW_currentVersion, cstr_current_version);
-	//DDX_Text(pDX, IDC_COMBO2, cstr_choose_version);
-	//DDX_Text(pDX, IDC_STATIC_FW_VERSION_DETAIL, cstr_detail_version);
-	//DDX_Text(pDX, IDC_STATIC_RL_DATE, cstr_detail_rl_date);
-	//DDX_Text(pDX, IDC_STATIC_DISK_SPACE, cstr_detail_disk_space);
+	DDX_Text(pDX, IDC_STATIC_FW_printer, cstr_fw_printer);
+	DDX_Text(pDX, IDC_STATIC_FW_model, cstr_model);
+	DDX_Text(pDX, IDC_STATIC_FW_currentVersion, cstr_current_version);
+	DDX_Text(pDX, IDC_COMBO2, cstr_choose_version);
+	DDX_Text(pDX, IDC_STATIC_FW_VERSION_DETAIL, cstr_detail_version);
+	DDX_Text(pDX, IDC_STATIC_RL_DATE, cstr_detail_rl_date);
+	DDX_Text(pDX, IDC_STATIC_DISK_SPACE, cstr_detail_disk_space);
 	DDX_Control(pDX, IDC_PROGRESS1, m_progressCtrl);
 	DDX_Control(pDX, IDC_STATIC_DOWNLOADING, m_staticProgressStatus);
 	DDX_Control(pDX, IDOK, m_btnOk);

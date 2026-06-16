@@ -28,11 +28,13 @@
 #define IDD_DIALOG_TICKET_DETAIL        1005
 #define IDC_EDIT_FIRMWARE_PRINTER       1021
 #define IDC_COMBO1                      1025
+#define IDC_COMBO_COBOBOX_SORT          1025
 #define IDC_COMBO2                      1026
 #define IDC_COMBO_LIST_FW               1026
 #define IDC_COMBO_TICKET_PRIORITY       1026
 #define IDC_BUTTON1                     1027
 #define IDC_BUTTON_UPDATEFW_DOWNLOAD    1027
+#define IDC_BUTTON_SORT_ID              1027
 #define IDC_STATIC_UPDATEFW_DETAIL      1028
 #define IDC_STATIC_FW_printer           1029
 #define IDC_STATIC_FW_model             1030

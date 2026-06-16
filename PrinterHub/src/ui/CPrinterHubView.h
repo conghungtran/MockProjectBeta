@@ -121,6 +121,9 @@ public:
 	afx_msg void OnBnClickedButtonTicketNewTicket();
 	afx_msg void OnBnClickedButtonTicketCloseTicket();
 	afx_msg void OnBnClickedButtonTicketRemove();
+	afx_msg void OnBnClickedButtonSortId();
+	CComboBox m_combo_sort;
+	afx_msg void OnCbnSelchangeComboCoboboxSort();
 };
 
 #ifndef _DEBUG  // debug version in CPrinterHubView.cpp

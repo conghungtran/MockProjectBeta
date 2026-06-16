@@ -196,6 +196,10 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\Sort\ISortStrategy.h" />
+    <ClInclude Include="src\core\Sort\SortByBrand.h" />
+    <ClInclude Include="src\core\Sort\SortById.h" />
+    <ClInclude Include="src\core\Sort\SortByModel.h" />
     <ClInclude Include="src\core\Ticket.h" />
     <ClInclude Include="src\ui\dialog\CCreateTicketDlg.h" />
     <ClInclude Include="src\core\CommandPattern\AddPrinterCommand.h" />
