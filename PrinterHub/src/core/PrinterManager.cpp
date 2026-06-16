@@ -65,6 +65,20 @@ void PrinterManager::executeUpdate(int index, const Printer& printer)
     Notify(PrinterEvent::PrinterUpdated, index);
 }
 
+void PrinterManager::executeSortDelete(int index,  Printer& printer)
+{
+    if (index < 0 || index >= (int)m_printers.size()) return;
+
+    m_printers[index] = printer;
+    printer.setStatus(PrinterStatus::RETIRED);
+    if (m_repository) {
+        m_repository->Update(index, printer);
+    }
+
+    Notify(PrinterEvent::PrinterUpdated, index);
+}
+
+
 void PrinterManager::executeDelete(int index)
 {
     if (index < 0 || index >= (int)m_printers.size()) return;

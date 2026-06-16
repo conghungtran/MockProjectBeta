@@ -47,6 +47,7 @@ namespace PrinterHub {
             void executeUpdate(int index, const Printer& printer);
             void executeDelete(int index);
             void executeUndoAdd(const Printer& printer);
+            void executeSortDelete(int index, Printer& printer);
 
             // Queries
             const Printer& GetPrinter(int index) const;
@@ -80,7 +81,7 @@ namespace PrinterHub {
             void sortPrinters();
             CString getCurrentSortName() const;
           
-        private:
+        public:
             std::vector<Printer> m_printers;
             std::unique_ptr<ISortStrategy> m_sortStrategy;
             std::vector<IObserver*> m_observers;

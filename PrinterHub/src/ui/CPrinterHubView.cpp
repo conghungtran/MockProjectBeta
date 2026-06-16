@@ -540,6 +540,9 @@ void CPrinterHubView::OnBnClickedButtonPrinterDeletePrinter()
 		
 	CPrinterHubDoc* pDoc = GetDocument();
 	pDoc->DeletePrinter(nSel);
+	//p.setStatus(PrinterStatus::RETIRED);
+	//pDoc->UpdatePrinter(nSel, p);
+	//pDoc->DeletePrinter(nSel);
 }
 
 // CPrinterHubView.cpp
@@ -564,6 +567,7 @@ void CPrinterHubView::OnBnClickedButtonPrinterUndo()
 
 	// Thực hiện Undo
 	pDoc->Undo();
+
 
 	// Cập nhật trạng thái nút Undo/Redo (optional)
 	//UpdateUndoRedoButtons();

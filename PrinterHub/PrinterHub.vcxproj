@@ -196,6 +196,8 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\config\AppConfig.h" />
+    <ClInclude Include="src\core\config\pch.h" />
     <ClInclude Include="src\core\Sort\ISortStrategy.h" />
     <ClInclude Include="src\core\Sort\SortByBrand.h" />
     <ClInclude Include="src\core\Sort\SortById.h" />

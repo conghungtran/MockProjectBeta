@@ -189,35 +189,35 @@ void CAddPrinterDlg::OnBnClickedButtonAddContinue()
 {
     UpdateData(TRUE);
 
-    //if (cstr_Id.IsEmpty())
-    //{
-    //    AfxMessageBox(_T("ID cannot be empty"));
-    //    return;
-    //}
+    if (cstr_Id.IsEmpty())
+    {
+        AfxMessageBox(_T("ID cannot be empty"));
+        return;
+    }
 
-    //if (cstr_Model.IsEmpty())
-    //{
-    //    AfxMessageBox(_T("Model cannot be empty"));
-    //    return;
-    //}
+    if (cstr_Model.IsEmpty())
+    {
+        AfxMessageBox(_T("Model cannot be empty"));
+        return;
+    }
 
-    //if (cstr_Brand.IsEmpty())
-    //{
-    //    AfxMessageBox(_T("Brand cannot be empty"));
-    //    return;
-    //}
+    if (cstr_Brand.IsEmpty())
+    {
+        AfxMessageBox(_T("Brand cannot be empty"));
+        return;
+    }
 
-    //if (cstr_PurchaseDate.IsEmpty())
-    //{
-    //    AfxMessageBox(_T("Purchase cannot be empty"));
-    //    return;
-    //}
+    if (cstr_PurchaseDate.IsEmpty())
+    {
+        AfxMessageBox(_T("Purchase cannot be empty"));
+        return;
+    }
 
-    //if (int_WarrantyMonth == 0)
-    //{
-    //    AfxMessageBox(_T("Warranty cannot be empty"));
-    //    return;
-    //}
+    if (int_WarrantyMonth == 0)
+    {
+        AfxMessageBox(_T("Warranty cannot be empty"));
+        return;
+    }
 
     std::cout << "CAdPrinterDlg Close\n";
     CDialogEx::OnOK();
